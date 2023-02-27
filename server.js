@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const projectRoutes = require('./routers/projectRoutes');
+const userRoutes = require('./routers/userRoutes');
 
 // express app
 const app = express();
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use('/api/projects', projectRoutes);
+app.use('/api/user', userRoutes);
 
 // mongoose
 mongoose.set('strictQuery', false);

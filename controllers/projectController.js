@@ -4,7 +4,7 @@ const Project = require('../models/projectModels');
 // get all projects
 const getAllProject = async (req, res) => {
   console.log("Getting all Projects");
-  const projects = await Project.find({});
+  const projects = await Project.find({}).sort({ createdAt: -1 });
 
   res.status(200).json(projects);
 }
@@ -28,12 +28,37 @@ const getSingleProject = async (req, res) => {
 
 // post a project
 const postProject = async (req, res) => {
-  const data = req.body;
-  console.log(data);
+  const { title, tech, budget, duration, manager, dev } = req.body;
+  // console.log(data);
+  const emptyFields = [];
+  if (!title) {
+    emptyFields.push("title");
+  }
+  if (!tech) {
+    emptyFields.push("tech");
+  }
+  if (!budget) {
+    emptyFields.push("budget");
+  }
+  if (!duration) {
+    emptyFields.push("duration");
+  }
+  if (!manager) {
+    emptyFields.push("manager");
+  }
+  if (!dev) {
+    emptyFields.push("dev");
+  }
+
+  if (emptyFields.length > 0) {
+    return res.status(400).json({ error: "Please, fill up all the fields", emptyFields })
+  }
+
   try {
     const project = await Project.create({
-      ...data
+      ...req.body
     });
+
 
     res.status(200).json(project);
 
@@ -66,7 +91,32 @@ const updateProject = async (req, res) => {
     res.status(400).json({ error: "Invalid Id" });
   }
 
-  const project = await Project.findOneAndUpdate({ _id: id }, { ...req.body });
+  const { title, tech, budget, duration, manager, dev } = req.body;
+  const emptyFields = [];
+  if (!title) {
+    emptyFields.push("title");
+  }
+  if (!tech) {
+    emptyFields.push("tech");
+  }
+  if (!budget) {
+    emptyFields.push("budget");
+  }
+  if (!duration) {
+    emptyFields.push("duration");
+  }
+  if (!manager) {
+    emptyFields.push("manager");
+  }
+  if (!dev) {
+    emptyFields.push("dev");
+  }
+
+  if (emptyFields.length > 0) {
+    return res.status(400).json({ error: "Please, fill up all the fields", emptyFields })
+  }
+
+  const project = await Project.findOneAndUpdate({ _id: id }, { ...req.body }, { new: true });
 
   if (!project) {
     res.status(400).json({ error: "No project found" });
