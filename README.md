@@ -42,6 +42,6 @@ To install the project, you'll need to clone the repository and set up the envir
      
  ## Links
  
- * [Live Demo](Live Demo)
- * [Front-End Repository](Front-End Repository)
- * [Back-End Repository](Back-End Repository)
+ * [Live Demo](https://proxima-client-project.netlify.app)
+ * [Front-End Repository](https://github.com/tahminaroshni/proxima-client)
+ * [Back-End Repository](https://github.com/tahminaroshni/proxima-server)
